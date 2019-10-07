@@ -4,15 +4,15 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "./build")
+    path: path.resolve(__dirname, "../backend/template/")
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: "babel-loader"
         }
       },
       {
@@ -24,7 +24,10 @@ module.exports = {
         use: {
             loader: 'file-loader',
         },    
-    },
-    ]    
+      },
+    ]
   }
 };
+
+
+
