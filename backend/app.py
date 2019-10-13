@@ -1,34 +1,39 @@
 import os
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, template_folder="./template")
-
+cors = CORS(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from models import Lawer, User
+from models import Lawyer, User
 
 
 @app.route("/")
 def index():
-    return render_template('bundle.js')
+    return ''
 
-@app.route("/addLawyer")
+@app.route("/addLawyer", methods=['POST'])
 def add_lawyer():
-    nome=request.args.get('nome')
-    rua=request.args.get('rua')
-    bairro=request.args.get('bairro')
-    cep=request.args.get('cep')
-    cidade=request.args.get('cidade')
-    telefone=request.args.get('telefone')
-    cpf=request.args.get('cpf')
-    area=request.args.get('area')
-    numOAB=request.args.get('numOAB')
+    print(request.json['user'])
+    nome = request.json['user']['nome']
+    rua = request.json['user']['rua']
+    bairro = request.json['user']['bairro']
+    cep = request.json['user']['CEP']
+    cidade = request.json['user']['cidade']
+    telefone = request.json['user']['telefone']
+    cpf = request.json['user']['cpf']
+    area = request.json['user']['area']
+    numOAB = request.json['user']['numOAB']
+    escritorio = request.json['user']['escritorio']
+    cidadeEscritorio = request.json['user']['cidadeEscritorio']
+    desc = request.json['user']['desc']
     
     try:
-        lawer=Lawer(
+        lawyer=Lawyer(
             nome=nome,
             rua=rua,
             bairro=bairro,
@@ -37,41 +42,46 @@ def add_lawyer():
             telefone=telefone,
             cpf=cpf,
             area=area,
-            numOAB=numOAB
-
+            numOAB=numOAB,
+            escritorio = escritorio,
+            cidadeEscritorio = cidadeEscritorio,
+            desc = desc
         )
-        db.session.add(lawer)
+        print(lawyer)
+        db.session.add(lawyer)
         db.session.commit()
-        return "Lawyer added. Lawyer id={}".format(lawer.id)
+        return "Lawyer added. Lawyer id={}".format(lawyer.id)
     except Exception as e:
 	    return(str(e))
 
 @app.route("/getallLawyer")
 def get_all():
     try:
-        lawyer=Lawer.query.all()
+        lawyer=Lawyer.query.all()
         return  jsonify([e.serialize() for e in lawyer])
     except Exception as e:
 	    return(str(e))
 
 
-@app.route("/get/<area>")
+@app.route("/getLawyer/<area>", methods=['PUT'])
 def get_by_area(area):
     try:
-        lawer=Lawer.query.filter_by(area=area)
+        print(area)
+        lawer=Lawyer.query.filter_by(area=area)
         return  jsonify([e.serialize() for e in lawer])
     except Exception as e:
 	    return(str(e))
 
 
-@app.route("/addUser")
+@app.route("/addUser", methods=['POST'])
 def add_user():
-    nome=request.args.get('nome')
-    rua=request.args.get('rua')
-    bairro=request.args.get('bairro')
-    cep=request.args.get('cep')
-    cidade=request.args.get('cidade')
-    cpf=request.args.get('cpf')
+    print(request.json['user'])
+    nome = request.json['user']['nome']
+    rua = request.json['user']['rua']
+    bairro = request.json['user']['bairro']
+    cep = request.json['user']['CEP']
+    cidade = request.json['user']['cidade']
+    cpf=request.json['user']['cpf']
     
     try:
         user=User(
@@ -80,7 +90,7 @@ def add_user():
             bairro=bairro,
             cep=cep,
             cidade=cidade,
-            cpf=cpf
+            cpf=cpf,
         )
         db.session.add(user)
         db.session.commit()

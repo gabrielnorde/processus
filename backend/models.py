@@ -1,6 +1,6 @@
 from app import db
 
-class Lawer(db.Model):
+class Lawyer(db.Model):
     __tablename__ = 'prj'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,8 +13,12 @@ class Lawer(db.Model):
     cpf = db.Column(db.String())
     area = db.Column(db.String())
     numOAB = db.Column(db.String())
+    escritorio = db.Column(db.String())
+    cidadeEscritorio = db.Column(db.String())
+    desc = db.Column(db.String())
 
-    def __init__(self, nome, rua, bairro, cep, cidade, telefone, cpf,area,numOAB):
+    def __init__(self, nome, rua, bairro, cep, cidade, telefone,
+                cpf,area,numOAB, escritorio, cidadeEscritorio, desc):
         self.nome = nome
         self.rua = rua
         self.bairro = bairro
@@ -24,6 +28,9 @@ class Lawer(db.Model):
         self.cpf = cpf
         self.area = area
         self.numOAB = numOAB
+        self.escritorio = escritorio
+        self.cidadeEscritorio = cidadeEscritorio
+        self.desc = desc
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -39,7 +46,10 @@ class Lawer(db.Model):
             'telefone': self.telefone,
             'cpf': self.cpf,
             'area': self.area,
-            'numOAB': self.numOAB
+            'numOAB': self.numOAB,
+            'escritorio': self.escritorio,
+            'cidadeEscritorio': self.cidadeEscritorio,
+            'desc': self.desc
         }
 
 
@@ -52,7 +62,6 @@ class User(db.Model):
     bairro = db.Column(db.String())
     cep = db.Column(db.String())
     cidade = db.Column(db.String())
-    telefone = db.Column(db.String())
     cpf = db.Column(db.String())
 
     def __init__(self, nome, rua, bairro, cep, cidade, cpf):
@@ -74,6 +83,5 @@ class User(db.Model):
             'bairro': self.bairro,
             'cep': self.cep,
             'cidade': self.cidade,
-            'telefone': self.telefone,
             'cpf': self.cpf,
         }

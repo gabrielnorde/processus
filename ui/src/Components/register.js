@@ -3,13 +3,14 @@ import { withStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 
 const styles = theme => ({
     root:{
         marginLeft: '280px',
         marginTop: '40px',
-        height: '600px',
+        height: '450px',
         width: '650px',
         padding: '50px',
     },
@@ -39,19 +40,55 @@ const styles = theme => ({
 });
 
 class Register extends React.Component{
+    state = {
+        nome: '',
+        rua: '',
+        bairro:'',
+        CEP: '',
+        cidade:'',
+        cpf:'',
+      }
+
+      handleChange = (name) => event => {
+        console.log(name)
+        this.setState({ [name]: event.target.value });
+      }
+
+      handleSubmit = event => {
+        event.preventDefault();
+     
+        const user = {
+          nome: this.state.nome,
+          rua: this.state.rua,
+          bairro:this.state.bairro,
+          CEP: this.state.CEP,
+          cidade:this.state.cidade,
+          cpf:this.state.cpf,
+        };
+    
+        axios.post(`http://127.0.0.1:5000/addUser`, { user })
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+          }).catch(err => {console.log(err);
+        });
+          
+      }
+    
     render(){
         const {classes} = this.props;
 
         return(
             <Card className={classes.root}>
                 <h2 className={classes.title}>Cadastro de Usuário</h2>
-                <form className={classes.forms}>
+                <form onSubmit={this.handleSubmit} className={classes.forms}>
                     <TextField
                         id="standard-name"
                         label="Nome Completo"
                         margin="normal"
                         fullWidth
                         variant="filled"
+                        onChange={this.handleChange("nome")}
                     />
                     <TextField
                         id="standard-name"
@@ -59,33 +96,29 @@ class Register extends React.Component{
                         margin="normal"
                         className={classes.mediumField}
                         variant="filled"
+                        onChange={this.handleChange("rua")}
                     />
                     <TextField
                         id="standard-name"
-                        label="Número"
+                        label="Bairro"
                         margin="normal"
                         variant="filled"
-                    />
-                    <TextField
-                        id="standard-name"
-                        label="Bairo"
-                        margin="normal"
-                        className={classes.smallField}
-                        variant="filled"
+                        onChange={this.handleChange("bairro")}
                     />
                     <TextField
                         id="standard-name"
                         label="CEP"
                         margin="normal"
-                        className={classes.smallField}
+                        className={classes.mediumField}
                         variant="filled"
+                        onChange={this.handleChange("CEP")}
                     />
                     <TextField
                         id="standard-name"
                         label="Cidade"
                         margin="normal"
-                        className={classes.smallField}
                         variant="filled"
+                        onChange={this.handleChange("cidade")}
                     />
                     <TextField
                         id="standard-name"
@@ -93,40 +126,19 @@ class Register extends React.Component{
                         margin="normal"
                         className={classes.mediumField}
                         variant="filled"
-                    />
-                    <TextField
-                        id="standard-name"
-                        label="Telefone"
-                        margin="normal"
-                        variant="filled"
-                    />
-                    <TextField
-                        id="standard-name"
-                        label="RG"
-                        margin="normal"
-                        className={classes.mediumField}
-                        variant="filled"
+                        onChange={this.handleChange("email")}
                     />
                     <TextField
                         id="standard-name"
                         label="CPF"
                         margin="normal"
                         variant="filled"
+                        onChange={this.handleChange("cpf")}
                     />
-                    <TextField
-                        id="standard-name"
-                        label="Usuário"
-                        margin="normal"
-                        className={classes.mediumField}
-                        variant="filled"
-                    />
-                    <TextField
-                        id="standad-name"
-                        label="Senha"
-                        margin="normal"
-                        variant="filled"
-                    />
-                    <Button className={classes.menuButton}>Enviar Cadastro</Button>
+                    <Button 
+                    className={classes.menuButton}
+                    type="submit">
+                        Enviar Cadastro</Button>
                 </form>
             </Card>
         );

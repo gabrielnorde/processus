@@ -31,6 +31,10 @@ const styles = theme => ({
   } );
 
 class Answer extends React.Component {
+
+
+
+  
   render(){
     const {classes} = this.props;
 
@@ -40,42 +44,10 @@ class Answer extends React.Component {
         <div className={classes.div}>
           <CardContent >
             <Typography component="h5" variant="h5">
-              Augusto de Moraes Filho Maia
+              {this.props.nome}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              Escritório de Advogados Maia e Maia
-            </Typography>
-            </CardContent>
-              <CardMedia
-              className={classes.cover}
-              image={require("./tribunal.jpeg")}
-              />
-        </div>
-      </Card>
-      <Card className={classes.root}>
-      <div className={classes.div}>
-        <CardContent >
-          <Typography component="h5" variant="h5">
-            Augusto de Moraes Filho Maia
-          </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            Escritório de Advogados Maia e Maia
-          </Typography>
-          </CardContent>
-            <CardMedia
-            className={classes.cover}
-            image={require("./tribunal.jpeg")}
-            />
-      </div>
-    </Card>
-    <Card className={classes.root}>
-        <div className={classes.div}>
-          <CardContent >
-            <Typography component="h5" variant="h5">
-              Augusto de Moraes Filho Maia
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
-              Escritório de Advogados Maia e Maia
+              {this.props.escritorio}
             </Typography>
             </CardContent>
               <CardMedia
