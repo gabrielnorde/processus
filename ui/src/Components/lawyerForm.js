@@ -11,7 +11,7 @@ const styles = theme => ({
     root:{
         marginLeft: '280px',
         marginTop: '40px',
-        height: '750px',
+        height: '630px',
         width: '650px',
         padding: '50px',
     },
@@ -21,7 +21,7 @@ const styles = theme => ({
         justifyContent: 'space-between',
     },
     mediumField:{
-        width: '400px',
+        width: '420px',
     },
     smallField:{
         width: '190px',
@@ -41,7 +41,7 @@ const styles = theme => ({
     },
 });
 
-class LawerForm extends React.Component{
+class LawyerForm extends React.Component{
     state = {
         search: '',
         nome: '',
@@ -56,6 +56,7 @@ class LawerForm extends React.Component{
         escritorio:'',
         cidadeEscritorio: '',
         desc:'',
+        valido: true,
       }
 
       handleChange = (name) => event => {
@@ -81,7 +82,53 @@ class LawerForm extends React.Component{
           desc:this.state.desc,
 
         };
-    
+        
+        if(user.nome == ''){
+            alert("Nome precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.rua == ''){
+            alert("Rua precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.bairro == ''){
+            alert("Bairro precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.CEP == ''){
+            alert("CEP precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.cidade == ''){
+            alert("Cidade precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.telefone == ''){
+            alert("Telefone precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.cpf == ''){
+            alert("CPF precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.area == ''){
+            alert("Área de Atuação precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.numOAB == ''){
+            alert("Número da OAB precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.escritorio == ''){
+            alert("CPF precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.cidadeEscritorio == ''){
+            alert("Cidade onde advoga precisa ser preenchido")
+            this.setState({valido : false})
+        }
+
+
         axios.post(`http://127.0.0.1:5000/addLawyer`, { user })
           .then(res => {
             console.log(res);
@@ -122,6 +169,15 @@ class LawerForm extends React.Component{
                         onChange={this.handleChange("bairro")}
                     />
                     <TextField
+                        id="numero"
+                        label="Endereço"
+                        margin="normal"
+                        type=""
+                        className={classes.smallField}
+                        variant="filled"
+                        onChange={this.handleChange("numero")}
+                    />
+                    <TextField
                         id="CEP"
                         label="CEP"
                         margin="normal"
@@ -146,10 +202,10 @@ class LawerForm extends React.Component{
                         onChange={this.handleChange("telefone")}
                     />
                     <TextField
-                        id="standard-name"
+                        id="cpf"
                         label="CPF"
                         margin="normal"
-                        className={classes.mediumField}
+                        className={classes.smallField}
                         variant="filled"
                         onChange={this.handleChange("cpf")}
                     />
@@ -163,12 +219,13 @@ class LawerForm extends React.Component{
                     />
                     <TextField
                         id="numOAB"
-                        label="Número OAB"
+                        label="Registro da OAB"
                         margin="normal"
-                        variant="filled"
                         fullWidth
+                        variant="filled"
                         onChange={this.handleChange("numOAB")}
                     />
+
                     <TextField
                         id="standard-name"
                         label="Nome do Escritório"
@@ -178,9 +235,10 @@ class LawerForm extends React.Component{
                         onChange={this.handleChange("escritorio")}
                     />
                     <TextField
-                        label="Cidade do Escritório"
+                        label="Cidade Onde Advoga"
                         margin="normal"
                         variant="filled"
+                        className={classes.smallField}
                         onChange={this.handleChange("cidadeEscritorio")}
                     />
                     <TextField
@@ -205,4 +263,4 @@ class LawerForm extends React.Component{
     }
 }
 
-export default withStyles(styles)(LawerForm);
+export default withStyles(styles)(LawyerForm);

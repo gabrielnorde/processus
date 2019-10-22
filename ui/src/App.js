@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Components/header';
 import Search from './Components/search';
 import './App.css';
-import LawerForm from './Components/lawerForm';
+import LawyerForm from './Components/lawyerForm';
 import LoginBox from './Components/login';
 import Register from './Components/register';
 import Answer from './Components/answer';
@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Header />
       <Route exact path="/" component={Search}/>
-      <Route path="/lawerForm" component={LawerForm}/>
+      <Route path="/lawyerForm" component={LawyerForm}/>
       <Route path="/login" component={LoginBox}/>
       <Route path="/form" component={Register}/>
       <Route path="/loginRegister" component={LoginRegister}/>

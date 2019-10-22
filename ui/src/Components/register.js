@@ -44,9 +44,11 @@ class Register extends React.Component{
         nome: '',
         rua: '',
         bairro:'',
+        numero:'',
         CEP: '',
         cidade:'',
         cpf:'',
+        valido:true,
       }
 
       handleChange = (name) => event => {
@@ -61,11 +63,42 @@ class Register extends React.Component{
           nome: this.state.nome,
           rua: this.state.rua,
           bairro:this.state.bairro,
+          numero: this.state.numero,
           CEP: this.state.CEP,
           cidade:this.state.cidade,
           cpf:this.state.cpf,
         };
-    
+        
+        if(user.nome == ''){
+            alert("Nome precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.rua == ''){
+            alert("Rua precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.bairro == ''){
+            alert("Bairro precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.CEP == ''){
+            alert("CEP precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.cidade == ''){
+            alert("Cidade precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.telefone == ''){
+            alert("Telefone precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        if(user.cpf == ''){
+            alert("CPF precisa ser preenchido")
+            this.setState({valido : false})
+        }
+        
+
         axios.post(`http://127.0.0.1:5000/addUser`, { user })
           .then(res => {
             console.log(res);
@@ -107,11 +140,26 @@ class Register extends React.Component{
                     />
                     <TextField
                         id="standard-name"
+                        label="Endereço"
+                        margin="normal"
+                        variant="filled"
+                        onChange={this.handleChange("numero")}
+                    />
+                    <TextField
+                        id="standard-name"
                         label="CEP"
                         margin="normal"
-                        className={classes.mediumField}
+                        className={classes.smallField}
                         variant="filled"
                         onChange={this.handleChange("CEP")}
+                    />
+                    <TextField
+                        id="standard-name"
+                        label="CPF"
+                        margin="normal"
+                        className={classes.smallField}
+                        variant="filled"
+                        onChange={this.handleChange("cpf")}
                     />
                     <TextField
                         id="standard-name"
@@ -123,18 +171,13 @@ class Register extends React.Component{
                     <TextField
                         id="standard-name"
                         label="E-mail"
+                        type='email'
                         margin="normal"
                         className={classes.mediumField}
                         variant="filled"
                         onChange={this.handleChange("email")}
                     />
-                    <TextField
-                        id="standard-name"
-                        label="CPF"
-                        margin="normal"
-                        variant="filled"
-                        onChange={this.handleChange("cpf")}
-                    />
+
                     <Button 
                     className={classes.menuButton}
                     type="submit">

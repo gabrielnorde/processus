@@ -37,7 +37,7 @@ class Header extends React.Component {
                         </Typography>
                         <Button 
                         component={Link} 
-                        to='/lawerForm'
+                        to='/lawyerForm'
                         color="inherit">
                             Sou advogado
                         </Button>
