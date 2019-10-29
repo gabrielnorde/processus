@@ -71,31 +71,31 @@ class Register extends React.Component{
         
         if(user.nome == ''){
             alert("Nome precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.rua == ''){
             alert("Rua precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.bairro == ''){
             alert("Bairro precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.CEP == ''){
             alert("CEP precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.cidade == ''){
             alert("Cidade precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.telefone == ''){
             alert("Telefone precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.cpf == ''){
             alert("CPF precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         
 
@@ -105,7 +105,9 @@ class Register extends React.Component{
             console.log(res.data);
           }).catch(err => {console.log(err);
         });
-          
+
+        this.state.valido = true;
+
       }
     
     render(){

@@ -1,10 +1,11 @@
 import os
+import json
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, template_folder="./template")
-cors = CORS(app)
+cors = CORS(app,resources='/*')
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -22,6 +23,7 @@ def add_lawyer():
     nome = request.json['user']['nome']
     rua = request.json['user']['rua']
     bairro = request.json['user']['bairro']
+    numero = request.json['user']['numero']
     cep = request.json['user']['CEP']
     cidade = request.json['user']['cidade']
     telefone = request.json['user']['telefone']
@@ -37,6 +39,7 @@ def add_lawyer():
             nome=nome,
             rua=rua,
             bairro=bairro,
+            numero=numero,
             cep=cep,
             cidade=cidade,
             telefone=telefone,
@@ -63,12 +66,13 @@ def get_all():
 	    return(str(e))
 
 
-@app.route("/getLawyer/<area>", methods=['PUT'])
-def get_by_area(area):
+@app.route("/getLawyer", methods=['POST'])
+def get_by_area():
     try:
+        area = request.json['user']['area']
+        lawyer=Lawyer.query.filter_by(area=area)
         print(area)
-        lawer=Lawyer.query.filter_by(area=area)
-        return  jsonify([e.serialize() for e in lawer])
+        return  jsonify([e.serialize() for e in lawyer])
     except Exception as e:
 	    return(str(e))
 
@@ -79,6 +83,7 @@ def add_user():
     nome = request.json['user']['nome']
     rua = request.json['user']['rua']
     bairro = request.json['user']['bairro']
+    numero = request.json['user']['numero']
     cep = request.json['user']['CEP']
     cidade = request.json['user']['cidade']
     cpf=request.json['user']['cpf']
@@ -88,6 +93,7 @@ def add_user():
             nome=nome,
             rua=rua,
             bairro=bairro,
+            numero=numero,
             cep=cep,
             cidade=cidade,
             cpf=cpf,

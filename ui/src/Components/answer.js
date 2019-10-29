@@ -47,13 +47,12 @@ class Answer extends React.Component {
               {this.props.nome}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {this.props.escritorio}
+              {this.props.escritorio} - {this.props.desc}
             </Typography>
+            <p>{this.props.cidade}</p>
             </CardContent>
-              <CardMedia
-              className={classes.cover}
-              image={require("./tribunal.jpeg")}
-              />
+            <p>{`Telefone - ${this.props.telefone}`}</p>            
+            <p>Endereço - {this.props.rua}, {this.props.numero}</p>
         </div>
       </Card>
       </div>

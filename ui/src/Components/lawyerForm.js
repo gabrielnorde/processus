@@ -47,6 +47,7 @@ class LawyerForm extends React.Component{
         nome: '',
         rua: '',
         bairro:'',
+        numero:'',
         CEP: '',
         cidade:'',
         telefone: '',
@@ -71,6 +72,7 @@ class LawyerForm extends React.Component{
           nome: this.state.nome,
           rua: this.state.rua,
           bairro:this.state.bairro,
+          numero:this.state.numero,
           CEP: this.state.CEP,
           cidade:this.state.cidade,
           telefone: this.state.telefone,
@@ -80,63 +82,65 @@ class LawyerForm extends React.Component{
           escritorio:this.state.escritorio,
           cidadeEscritorio: this.state.cidadeEscritorio,
           desc:this.state.desc,
-
         };
-        
+         
         if(user.nome == ''){
             alert("Nome precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.rua == ''){
             alert("Rua precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.bairro == ''){
             alert("Bairro precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.CEP == ''){
             alert("CEP precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.cidade == ''){
             alert("Cidade precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.telefone == ''){
             alert("Telefone precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.cpf == ''){
             alert("CPF precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.area == ''){
             alert("Área de Atuação precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.numOAB == ''){
             alert("Número da OAB precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.escritorio == ''){
             alert("CPF precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
         if(user.cidadeEscritorio == ''){
             alert("Cidade onde advoga precisa ser preenchido")
-            this.setState({valido : false})
+            this.state.valido = false;
         }
 
-
-        axios.post(`http://127.0.0.1:5000/addLawyer`, { user })
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-          }).catch(err => {console.log(err);
-        });
-          
+        if (this.state.valido == true){
+            axios.post(`http://127.0.0.1:5000/addLawyer`, { user })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            }).catch(err => {console.log(err);
+            });
+        }
+        this.state.valido = true;
+        console.log(user);
       }
+
     render(){
         const {classes} = this.props;
 
@@ -172,7 +176,6 @@ class LawyerForm extends React.Component{
                         id="numero"
                         label="Endereço"
                         margin="normal"
-                        type=""
                         className={classes.smallField}
                         variant="filled"
                         onChange={this.handleChange("numero")}

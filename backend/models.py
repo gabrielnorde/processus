@@ -11,7 +11,7 @@ class Lawyer(db.Model):
     cep = db.Column(db.String())
     cidade = db.Column(db.String())
     telefone = db.Column(db.String())
-    cpf = db.Column(db.String())
+    cpf = db.Column(db.String(), unique=True)
     area = db.Column(db.String())
     numOAB = db.Column(db.String())
     escritorio = db.Column(db.String())
@@ -43,7 +43,7 @@ class Lawyer(db.Model):
             'nome': self.nome,
             'rua': self.rua,
             'bairro': self.bairro,
-            'numero' : self.numero
+            'numero' : self.numero,
             'cep': self.cep,
             'cidade': self.cidade,
             'telefone': self.telefone,
@@ -66,9 +66,9 @@ class User(db.Model):
     numero = db.Column(db.String())
     cep = db.Column(db.String())
     cidade = db.Column(db.String())
-    cpf = db.Column(db.String())
+    cpf = db.Column(db.String(), unique=True)
 
-    def __init__(self, nome, rua, bairro, cep, cidade, cpf):
+    def __init__(self, nome, rua,numero, bairro, cep, cidade, cpf):
         self.nome = nome
         self.rua = rua
         self.bairro = bairro

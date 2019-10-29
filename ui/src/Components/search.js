@@ -46,7 +46,7 @@ class Search extends React.Component {
             area:this.state.area,
           };
 
-        axios.get(`http://127.0.0.1:5000/getallLawyer`)
+        axios.post(`http://127.0.0.1:5000/getLawyer`, {user})
         .then(res => {
           console.log(res)
           const lawyers = res.data;
@@ -77,7 +77,9 @@ class Search extends React.Component {
             
                 {this.state.visible ? 
                 this.state.lawyers.map((lawyer) =>
-                <Answer nome={lawyer.nome} escritorio={lawyer.escritorio}/>) : null  }
+                <Answer nome={lawyer.nome} escritorio={lawyer.escritorio}
+                desc={lawyer.desc} cidade={lawyer.cidadeEscritorio} telefone={lawyer.telefone}
+                endereco={lawyer.endereco} numero={lawyer.numero}/>) : null  }
             </div>
         );
 }}
