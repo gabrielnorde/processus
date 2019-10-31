@@ -24,14 +24,20 @@ const styles = theme => ({
   },
 });
 
-class LoginBox extends React.Component {
+class ChangeLogin extends React.Component {
   state = {
-    senha:'',
+    confirmpassword:'',
+    newpassword:'',
     email:'',
-    valido: true,
-    validUser:null,
+    valido: false,
   }
-
+  
+  componentDidMount(){
+      const {email} = this.props.location.state
+      this.setState({email:email})
+      console.log(email)
+      
+  }
   handleChange = (name) => event => {
     console.log(name)
     this.setState({ [name]: event.target.value });
@@ -39,38 +45,32 @@ class LoginBox extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    
     const user = {
-      senha:this.state.senha,
+      newpassword:this.state.newpassword,
+      confirmpassword:this.state.confirmpassword,
       email:this.state.email,
     };
      
-    
-    if(user.senha == ''){
-        alert("Senha precisa ser preenchido")
+  
+    if(user.newpassword == ''){
+        alert("Nova Senha precisa ser preenchida")
         this.state.valido = false;
     }
-  
-    if(user.email == ''){
-        alert("E-mail precisa ser preenchido")
+
+    if(user.confirmpassword ==''){
+        alert('Confirmação de senha precisa ser preenchida')
         this.state.valido = false;
     }
    
 
     if (this.state.valido == true){
-        axios.post(`http://127.0.0.1:5000/checkAccess`, { user })
+        axios.post(`http://127.0.0.1:5000/updateAccess`, { user })
         .then(res => {
             console.log(res);
             console.log(res.data);
-
-            const response = res.data;
-            console.log(response)
-            
         }).catch(err => {console.log(err);
         });
     }
-
-        
     this.state.valido = true;
     console.log(user);
   }
@@ -83,7 +83,7 @@ class LoginBox extends React.Component {
         <CssBaseline />
         <div >
           <Typography component="h1" variant="h5">
-            Sign in
+            Change password
           </Typography>
           <form  onSubmit={this.handleSubmit}>
             <TextField
@@ -91,50 +91,33 @@ class LoginBox extends React.Component {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={this.handleChange("email")}
+              name="newpassword"
+              label="Nova Senha"
+              type="password"
+              id="senha"
+              autoComplete="current-password"
+              onChange={this.handleChange("newpassword")}
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Senha"
+              name="confirmpassword"
+              label="Confirmação Nova Senha"
               type="password"
-              id="senha"
+              id="confirmacao senha"
               autoComplete="current-password"
-              onChange={this.handleChange("senha")}
+              onChange={this.handleChange("confirmpassword")}
             />
             <Button
-              component={Link} 
-              to={{
-                pathname:'/updateLawyerForm',
-                state:{
-                  email:this.state.email,
-                }
-            }}
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.signIn}
             >
-              Logar
-            </Button>
-            <Button
-              component={Link} 
-              to='/lawyerForm'
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.signIn}
-            >
-              Cadastre-se
+              Mudar a senha
             </Button>
           </form>
         </div>
@@ -144,4 +127,4 @@ class LoginBox extends React.Component {
   }
 }
 
-export default withStyles(styles)(LoginBox)
+export default withStyles(styles)(ChangeLogin)

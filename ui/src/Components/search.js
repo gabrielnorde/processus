@@ -79,7 +79,7 @@ class Search extends React.Component {
                 this.state.lawyers.map((lawyer) =>
                 <Answer nome={lawyer.nome} escritorio={lawyer.escritorio}
                 desc={lawyer.desc} cidade={lawyer.cidadeEscritorio} telefone={lawyer.telefone}
-                endereco={lawyer.endereco} numero={lawyer.numero}/>) : null  }
+                rua={lawyer.rua} numero={lawyer.numero} bairro={lawyer.bairro}/>) : null  }
             </div>
         );
 }}

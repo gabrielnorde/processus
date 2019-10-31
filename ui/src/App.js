@@ -6,8 +6,8 @@ import LawyerForm from './Components/lawyerForm';
 import LoginBox from './Components/login';
 import Register from './Components/register';
 import Answer from './Components/answer';
-import LoginRegister from './Components/loginRegister';
-import Profile from './Components/profile';
+import ChangeLogin from './Components/changeLogin';
+import UpdateLawyerForm from './Components/updateLawyer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
@@ -18,9 +18,10 @@ function App() {
       <Route path="/lawyerForm" component={LawyerForm}/>
       <Route path="/login" component={LoginBox}/>
       <Route path="/form" component={Register}/>
-      <Route path="/loginRegister" component={LoginRegister}/>
-      <Route path="/profile" component={Profile}/>
+      <Route path="/changeLogin" component={ChangeLogin}/>
       <Route path="/answer" component={Answer}/>
+      <Route path="/updateLawyerForm" component={UpdateLawyerForm}/>
+
     </Router>
       
   );

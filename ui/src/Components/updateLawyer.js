@@ -41,26 +41,35 @@ const styles = theme => ({
     },
 });
 
-class LawyerForm extends React.Component{
+class UpdateLawyerForm extends React.Component{
     state = {
-        search: '',
-        nome: '',
-        rua: '',
-        bairro:'',
-        numero:'',
-        CEP: '',
-        cidade:'',
-        telefone: '',
-        cpf:'',
-        area:'',
         email:'',
-        numOAB:'',
-        escritorio:'',
-        cidadeEscritorio: '',
-        desc:'',
+        lawyers:[],
         valido: true,
       }
 
+      componentDidMount(){
+        const {email} = this.props.location.state
+        this.setState({email:email})
+        console.log(email)
+        const user = {
+            email:email,
+          };
+        
+        axios.post(`http://127.0.0.1:5000/getLawyerByEmail`, {user})
+        .then(res => {
+          console.log(res)
+          const lawyers = res.data;
+          this.setState({ lawyers });
+          this.setState({visible :true})
+          console.log(lawyers.nome)
+        })          
+        .catch(err => {console.log(err);
+        });
+
+        
+      } 
+        
       handleChange = (name) => event => {
         console.log(name)
         this.setState({ [name]: event.target.value });
@@ -79,7 +88,6 @@ class LawyerForm extends React.Component{
           telefone: this.state.telefone,
           cpf:this.state.cpf,
           area:this.state.area,
-          email:this.state.email,
           numOAB:this.state.numOAB,
           escritorio:this.state.escritorio,
           cidadeEscritorio: this.state.cidadeEscritorio,
@@ -136,15 +144,7 @@ class LawyerForm extends React.Component{
         }
 
         if (this.state.valido == true){
-            axios.post(`http://127.0.0.1:5000/addLawyer`, { user })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            }).catch(err => {console.log(err);
-            });
-        }
-        if (this.state.valido == true){
-            axios.post(`http://127.0.0.1:5000/addAccess`, { user })
+            axios.post(`http://127.0.0.1:5000/updateLawyer`, { user })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -159,20 +159,22 @@ class LawyerForm extends React.Component{
         const {classes} = this.props;
 
         return(
+            this.state.lawyers.map((lawyer) =>
             <Card className={classes.root}>
                 <h2 className={classes.title}>Cadastro de Advogado</h2>
                 <form onSubmit={this.handleSubmit} className={classes.forms}>
                     <TextField
                         id="name"
-                        label="Nome Completo"
+                        label={lawyer.nome}
                         margin="normal"
                         fullWidth
+                        disabled={true}
                         variant="filled"
                         onChange={this.handleChange("nome")}
                     />
                     <TextField
                         id="rua"
-                        label="Rua"
+                        label={lawyer.rua}
                         margin="normal"
                         className={classes.mediumField}
                         variant="filled"
@@ -180,7 +182,7 @@ class LawyerForm extends React.Component{
                     />
                     <TextField
                         id="bairro"
-                        label="Bairro"
+                        label={lawyer.bairro}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -188,7 +190,7 @@ class LawyerForm extends React.Component{
                     />
                     <TextField
                         id="numero"
-                        label="Endereço"
+                        label={lawyer.endereco}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -196,7 +198,7 @@ class LawyerForm extends React.Component{
                     />
                     <TextField
                         id="CEP"
-                        label="CEP"
+                        label={lawyer.cep}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -204,7 +206,7 @@ class LawyerForm extends React.Component{
                     />
                     <TextField
                         id="Cidade"
-                        label="Cidade"
+                        label={lawyer.cidade}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -212,7 +214,7 @@ class LawyerForm extends React.Component{
                     />
                     <TextField
                         id="Telefone"
-                        label="Telefone"
+                        label={lawyer.telefone1}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -221,6 +223,7 @@ class LawyerForm extends React.Component{
                     <TextField
                         id="cpf"
                         label="CPF"
+                        disabled={true}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -237,6 +240,7 @@ class LawyerForm extends React.Component{
                     <TextField
                         id="email"
                         label="Endereço de e-mail"
+                        disabled={true}
                         margin="normal"
                         className={classes.mediumField}
                         variant="filled"
@@ -245,6 +249,7 @@ class LawyerForm extends React.Component{
                     <TextField
                         id="numOAB"
                         label="Registro da OAB"
+                        disabled={true}
                         margin="normal"
                         className={classes.smallField}
                         variant="filled"
@@ -282,9 +287,8 @@ class LawyerForm extends React.Component{
                         Enviar
                     </Button>
                 </form>
-            </Card>
+            </Card>)
         );
     }
 }
-
-export default withStyles(styles)(LawyerForm);
+export default withStyles(styles)(UpdateLawyerForm);

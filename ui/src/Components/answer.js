@@ -9,7 +9,7 @@ const styles = theme => ({
   root:{
     marginLeft: '250px',
     marginTop: '40px',
-    height: '100px',
+    height: '120px',
     width: '700px',
     padding: '40px',
     '&:hover': {
@@ -50,9 +50,11 @@ class Answer extends React.Component {
               {this.props.escritorio} - {this.props.desc}
             </Typography>
             <p>{this.props.cidade}</p>
-            </CardContent>
-            <p>{`Telefone - ${this.props.telefone}`}</p>            
-            <p>Endereço - {this.props.rua}, {this.props.numero}</p>
+          </CardContent>
+          <CardContent>
+            <p>Telefone - {this.props.telefone}</p>            
+            <p>Endereço - {this.props.rua}, {this.props.numero}, {this.props.bairro}</p>
+          </CardContent>
         </div>
       </Card>
       </div>
